@@ -1,3 +1,56 @@
+# Logseq Image Reformatter for Obsidian
+
+This plugin converts Obsidian-style image embeds to standard Markdown format, making your notes compatible with Logseq and other standard Markdown editors.
+
+## Purpose
+
+Obsidian uses a non-standard format for embedding images: `![[image.png]]`
+
+This plugin converts those links to standard Markdown format: `![image](../assets/image.png)`
+
+## Features
+
+- One-click conversion of all image embeds in the current note
+- Configurable output path for image references
+- Easy-to-use command via the command palette
+
+## Usage
+
+1. Open a note containing Obsidian-style image embeds (`![[image.png]]`)
+2. Open the Command Palette (Ctrl+P / Cmd+P)
+3. Search for "Reformat Images for Logseq" and select it
+4. All valid image embeds will be reformatted instantly
+
+## Settings
+
+In the plugin settings, you can configure:
+
+- **Output Path**: The path prefix for reformatted image links (default: `../assets`)
+
+## Installation
+
+### From Obsidian (Coming Soon)
+
+1. Open Obsidian Settings
+2. Navigate to Community Plugins and turn off "Safe Mode"
+3. Click "Browse" and search for "Logseq Image Reformatter"
+4. Install and enable the plugin
+
+### Manual Installation
+
+1. Download the latest release from the GitHub releases
+2. Extract the files to your vault's `.obsidian/plugins/obsidian-logseq-image-reformatter` folder
+3. Restart Obsidian or reload plugins
+4. Enable the plugin in the Community Plugins section of Obsidian settings
+
+## Feedback and Support
+
+If you encounter any issues or have feature requests, please open an issue on the GitHub repository.
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
 # Obsidian Image ClassifyPaste Plugin
 
 ## This plug-in two features
@@ -66,7 +119,7 @@ Fixed the problem that if there is content before the line when pasting, it will
 
 
 调试快捷键：
-如果更新了ob版本后 ，ctrl+shift+i无法调出devtool，在设置里面搜索“调试快捷键”，取消设置ctrl+shift+i，然后再使用该快捷键即可生效
+如果更新了ob版本后 ，ctrl+shift+i无法调出devtool，在设置里面搜索"调试快捷键"，取消设置ctrl+shift+i，然后再使用该快捷键即可生效
 macos: `cmmand+option+i`
 
 # 
