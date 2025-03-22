@@ -33,7 +33,8 @@ function reformatMarkdownContent(content: string, outputPath: string): { content
         if (!isImage(imageName)) continue;
         
         // Create the new link in standard Markdown format with the specified path
-        const newLink = `![image](${outputPath}/${imageName})`;
+        // Add angle brackets around the path for better compatibility with spaces in filenames
+        const newLink = `![image](<${outputPath}/${imageName}>)`;
         
         // Replace in the content
         modifiedContent = modifiedContent.replace(originalLink, newLink);
@@ -48,7 +49,7 @@ describe('Image Reformatter', () => {
 
     it('should reformat a basic image link', () => {
         const input = 'Here is an image: ![[image.png]]';
-        const expected = `Here is an image: ![image](${outputPath}/image.png)`;
+        const expected = `Here is an image: ![image](<${outputPath}/image.png>)`;
         
         const result = reformatMarkdownContent(input, outputPath);
         expect(result.content).toEqual(expected);
@@ -57,7 +58,7 @@ describe('Image Reformatter', () => {
 
     it('should reformat multiple images', () => {
         const input = 'Image 1: ![[img1.jpg]]\nImage 2: ![[img2.png]]';
-        const expected = `Image 1: ![image](${outputPath}/img1.jpg)\nImage 2: ![image](${outputPath}/img2.png)`;
+        const expected = `Image 1: ![image](<${outputPath}/img1.jpg>)\nImage 2: ![image](<${outputPath}/img2.png>)`;
         
         const result = reformatMarkdownContent(input, outputPath);
         expect(result.content).toEqual(expected);
@@ -66,7 +67,7 @@ describe('Image Reformatter', () => {
 
     it('should handle various image types', () => {
         const input = '![[photo.jpg]] ![[icon.png]] ![[animation.gif]] ![[vector.svg]] ![[bitmap.bmp]]';
-        const expected = `![image](${outputPath}/photo.jpg) ![image](${outputPath}/icon.png) ![image](${outputPath}/animation.gif) ![image](${outputPath}/vector.svg) ![image](${outputPath}/bitmap.bmp)`;
+        const expected = `![image](<${outputPath}/photo.jpg>) ![image](<${outputPath}/icon.png>) ![image](<${outputPath}/animation.gif>) ![image](<${outputPath}/vector.svg>) ![image](<${outputPath}/bitmap.bmp>)`;
         
         const result = reformatMarkdownContent(input, outputPath);
         expect(result.content).toEqual(expected);
@@ -75,7 +76,7 @@ describe('Image Reformatter', () => {
 
     it('should ignore non-image files', () => {
         const input = 'Image: ![[photo.jpg]] Document: ![[document.pdf]]';
-        const expected = `Image: ![image](${outputPath}/photo.jpg) Document: ![[document.pdf]]`;
+        const expected = `Image: ![image](<${outputPath}/photo.jpg>) Document: ![[document.pdf]]`;
         
         const result = reformatMarkdownContent(input, outputPath);
         expect(result.content).toEqual(expected);
@@ -84,7 +85,7 @@ describe('Image Reformatter', () => {
 
     it('should handle mixed content', () => {
         const input = '# Heading\n\nNormal text with ![[image.png]] embedded.\n\n- List item with ![[photo.jpg]]\n- Another item';
-        const expected = `# Heading\n\nNormal text with ![image](${outputPath}/image.png) embedded.\n\n- List item with ![image](${outputPath}/photo.jpg)\n- Another item`;
+        const expected = `# Heading\n\nNormal text with ![image](<${outputPath}/image.png>) embedded.\n\n- List item with ![image](<${outputPath}/photo.jpg>)\n- Another item`;
         
         const result = reformatMarkdownContent(input, outputPath);
         expect(result.content).toEqual(expected);
@@ -93,7 +94,7 @@ describe('Image Reformatter', () => {
 
     it('should handle links and other markdown', () => {
         const input = '[External link](https://example.com) and ![[image.jpg]] and **bold text**';
-        const expected = `[External link](https://example.com) and ![image](${outputPath}/image.jpg) and **bold text**`;
+        const expected = `[External link](https://example.com) and ![image](<${outputPath}/image.jpg>) and **bold text**`;
         
         const result = reformatMarkdownContent(input, outputPath);
         expect(result.content).toEqual(expected);
@@ -111,7 +112,7 @@ describe('Image Reformatter', () => {
 
     it('should handle images with spaces in names', () => {
         const input = '![[my image.jpg]] and ![[photo with spaces.png]]';
-        const expected = `![image](${outputPath}/my image.jpg) and ![image](${outputPath}/photo with spaces.png)`;
+        const expected = `![image](<${outputPath}/my image.jpg>) and ![image](<${outputPath}/photo with spaces.png>)`;
         
         const result = reformatMarkdownContent(input, outputPath);
         expect(result.content).toEqual(expected);

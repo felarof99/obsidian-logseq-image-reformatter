@@ -69,7 +69,8 @@ export default class LogseqImageReformatterPlugin extends Plugin {
 			if (!this.isImage(imageName)) continue;
 			
 			// Create the new link in standard Markdown format with the specified path
-			const newLink = `![image](${outputPath}/${imageName})`;
+			// Add angle brackets around the path for better compatibility with spaces in filenames
+			const newLink = `![image](<${outputPath}/${imageName}>)`;
 			
 			// Replace in the content
 			modifiedContent = modifiedContent.replace(originalLink, newLink);
